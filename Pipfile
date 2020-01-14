@@ -10,6 +10,7 @@ black = "*"
 [packages]
 django = "*"
 pillow = "*"
+faker = "~=2.0.5"
 django-seed = "*"
 
 [requires]
