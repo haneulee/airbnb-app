@@ -34,3 +34,7 @@ python manage.py mega_seed
 
 ### API
 pipenv install djangorestframework
+
+### admin
+python manage.py createsuperuser
+
