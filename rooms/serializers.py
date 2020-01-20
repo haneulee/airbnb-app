@@ -5,7 +5,7 @@ from .models import Room
 # convert python <-> json object
 
 
-class ReadRoomSerializer(serializers.ModelSerializer):
+class RoomSerializer(serializers.ModelSerializer):
 
     user = RelatedUserSerializer()
 
@@ -13,11 +13,7 @@ class ReadRoomSerializer(serializers.ModelSerializer):
         model = Room
         exclude = ("modified",)
 
-
-class WriteRoomSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Room
-        exclude = ("user", "modified", "created")
+    read_only_fields = ("user", "id", "created", "updated")
 
     def validate(self, data):
         # 처음 room을 생성할 때만 체크하도록 변경, instance가 있으면 이미 생성된 room
