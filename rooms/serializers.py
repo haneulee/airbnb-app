@@ -1,15 +1,21 @@
 from rest_framework import serializers
 from users.serializers import UserSerializer
-from .models import Room
+from .models import Room, Photo
+
+
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Photo
+        exclude = ("room",)
 
 # convert python <-> json object
 
 
 class RoomSerializer(serializers.ModelSerializer):
 
-    user = UserSerializer(read_only=True)
-
     is_fav = serializers.SerializerMethodField()
+    user = UserSerializer(read_only=True)
+    photos = PhotoSerializer(read_only=True, many=True)
 
     class Meta:
         model = Room
