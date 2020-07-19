@@ -27,8 +27,10 @@ class RoomViewSet(ModelViewSet):
         beds = request.GET.get("beds", None)
         bedrooms = request.GET.get("bedrooms", None)
         bathrooms = request.GET.get("bathrooms", None)
-        lat = request.GET.get("lat", None)
-        lng = request.GET.get("lng", None)
+        north = request.GET.get("north", None)
+        south = request.GET.get("south", None)
+        west = request.GET.get("west", None)
+        east = request.GET.get("east", None)
         filter_kwargs = {}
         if max_price is not None:
             filter_kwargs["price__lte"] = max_price
@@ -41,11 +43,15 @@ class RoomViewSet(ModelViewSet):
         if bathrooms is not None:
             filter_kwargs["bathrooms__gte"] = bathrooms
         paginator = self.paginator
-        if lat is not None and lng is not None:
-            filter_kwargs["lat__gte"] = float(lat) - 0.005
-            filter_kwargs["lat__lte"] = float(lat) + 0.005
-            filter_kwargs["lng__gte"] = float(lng) - 0.005
-            filter_kwargs["lng__lte"] = float(lng) + 0.005
+        if north is not None and east is not None and west is not None and south is not None:
+            print(north)
+            print(south)
+            print(east)
+            print(west)
+            filter_kwargs["lat__gte"] = float(south)
+            filter_kwargs["lat__lte"] = float(north)
+            filter_kwargs["lng__gte"] = float(west)
+            filter_kwargs["lng__lte"] = float(east)
         try:
             rooms = Room.objects.filter(**filter_kwargs)
         except ValueError:
